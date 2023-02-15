@@ -1,12 +1,15 @@
 from abc import ABC, abstractmethod
+from itertools import product
+
+chess_board = list(product("ABCDEFGH", range(1, 9)))
 
 
 class Figure(metaclass=ABC):
-    """Figure abstract class"""
+    """Figure abstract base class"""
 
     @abstractmethod
     def __init__(self, current_field: str):
-        self.position = current_field
+        self.current_field = current_field
 
     @abstractmethod
     def list_available_moves(self) -> list:
