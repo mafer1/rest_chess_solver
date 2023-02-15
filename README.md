@@ -1,2 +1,2 @@
-# recr_chess_res
+# recr_chess_rest
 Recruiting task
