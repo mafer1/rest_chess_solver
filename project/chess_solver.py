@@ -22,6 +22,14 @@ class Figure(metaclass=ABC):
 
 
 class Location:
+    """
+    Location class with validation methods for both dimensions.
+    horizontal: str range(A-H)
+    vertical: int range 1-9
+    """
+
+    _HORIZONTAL_TRANSITION = dict(zip("ABCDEFGH", range(1, 9)))
+
     def __init__(self, horizontal, vertical):
         self.horizontal: str = horizontal
         self.vertical: int = vertical
@@ -42,21 +50,29 @@ class Location:
             raise TypeError("Inappropriate type of value. Please use string")
         elif value not in "ABCDEFGH":
             raise ValueError("Uncorrected value. Please use value from range A-H")
+        elif len(value) != 1:
+            raise ValueError(f"Uncorrected value. Field {value} does not exist. Please use value from range A-H")
         else:
             self._horizontal = value
 
     @vertical.setter
-    def vertical(self, value: int):
-        if not isinstance(value, int):
+    def vertical(self, value: str):
+        try:
+            value = int(value)
+        except ValueError:
             raise TypeError("Inappropriate type of value. Please use int")
-        elif value not in range(1, 9):
-            raise ValueError("Uncorrected value. Please use value from range 1-8")
         else:
-            self._vertical = value
+            if value not in range(1, 9):
+                raise ValueError("Uncorrected value. Please use value from range 1-8")
+            else:
+                self._vertical = value
 
     def __repr__(self):
         """Location representation"""
         return f"Location object for chess figure: ({self._horizontal}, {self._vertical})"
+
+    def __add__(self, other):
+        return self.horizontal + other.horizontal, self.vertical + other.vertical
 
 
 class Pawn(Figure):
