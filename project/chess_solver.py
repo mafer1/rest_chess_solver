@@ -1,3 +1,4 @@
+import string
 from abc import ABCMeta, abstractmethod
 from itertools import product
 
@@ -26,10 +27,10 @@ class FigurePosition:
     vertical: int range 1-9
     """
 
-    def __init__(self, bare_position):
-        self.bare_position = bare_position
-        self.horizontal: str = self.bare_position[0]
-        self.horizontal_index: int = dict(zip("ABCDEFGH", range(1, 9)))[self.horizontal]
+    def __init__(self, bare_position: str):
+        self.bare_position = bare_position.lower()
+        self.horizontal = self.bare_position[0]
+        self.horizontal_index: int = dict(zip(string.ascii_lowercase[:8], range(1, 9)))[self.horizontal]
         self.vertical = self.bare_position[1]
         self.position_tuple = (self.horizontal_index, self.vertical)
 
@@ -47,10 +48,8 @@ class FigurePosition:
     def horizontal(self, value: str):
         if not isinstance(value, str):
             raise TypeError("Inappropriate type of value. Please use string")
-        elif value not in "ABCDEFGH":
+        elif value not in string.ascii_lowercase():
             raise ValueError("Uncorrected value. Please use value from range A-H")
-        elif len(value) != 1:
-            raise ValueError(f"Uncorrected value. Field {value} does not exist. Please use value from range A-H")
         else:
             self._horizontal = value
 
