@@ -142,22 +142,14 @@ class Pawn(Figure):
         ONE EXCEPTION - when pawn is not moved, it can move forward two squares.
         :return: list
         """
-        cart_tuple = self._position.position_tuple
-        figure_moves = []
-        if self._position.position_tuple[1] == 2:
-            for move_vector in self._available_move_vectors:
-                figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
-            figure_moves2 = [
-                f"{string.ascii_uppercase[h - 1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
-            ]
-            return sorted(figure_moves2)
-        else:
-            figure_moves.append(
-                (cart_tuple[0] + self._available_move_vectors[0][0], cart_tuple[1] + self._available_move_vectors[0][1])
+        return sorted(
+            set(
+                create_list_of_moves(
+                    self._position.position_tuple,
+                    self._available_move_vectors if self._position.position_tuple[1] == 2 else [(0, 1)],
+                )
             )
-            return [
-                f"{string.ascii_uppercase[h - 1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
-            ]
+        )
 
     def validate_move(self, dest_field: str) -> bool:
         """
