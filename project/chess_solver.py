@@ -3,7 +3,25 @@ from abc import ABCMeta, abstractmethod
 from itertools import product
 
 
-def create_list_of_moves(position_tuple: tuple, vectors: list) -> list:
+def location_translator(func):
+    """
+    Function translates coordinates from cartesian system to chess board
+    :param func: creator/gathering function for tuples in structure similar to chess board coordinates ([A-H],[1-8])
+    :return: list of translated values corresponding to chess board location system
+    """
+
+    def inner(*args, **kwargs):
+        list_of_moves = func(*args, **kwargs)
+        return [f"{string.ascii_uppercase[h - 1]}{v}" for h, v in list_of_moves]
+
+    return inner
+
+
+@location_translator
+def create_list_of_moves(
+    position_tuple: tuple,
+    vectors: list,
+) -> list:
     """
     Function of creating set of possible vectors for chess figures
     :param position_tuple: position described in cartesian coordinates
