@@ -161,3 +161,57 @@ class Knight(Figure):
         :return: bool
         """
         return dest_field in self.list_available_moves()
+
+
+class Rook(Figure):
+    """Rook figure - only vertically or horizontally"""
+
+    def __init__(self, current_field):
+        self.current_field = current_field
+        self._position = FigurePosition(current_field)
+        self._available_move_vectors = list(product(range(-7, 8), [0])) + list(product([0], range(-7, 8)))
+
+    def list_available_moves(self) -> list:
+        cart_tuple = self._position.position_tuple
+        figure_moves = []
+        for move_vector in self._available_move_vectors:
+            figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
+
+        import string
+
+        figure_moves2 = [
+            f"{string.ascii_uppercase[h-1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
+        ]
+        return sorted(set(figure_moves2))
+
+    def validate_move(self, dest_field: str) -> bool:
+        return True if dest_field in self.list_available_moves() else False
+
+
+class Queen(Figure):
+    """Queen figure - diagonally or vertically or horizontally"""
+
+    def __init__(self, current_field):
+        self.current_field = current_field
+        self._position = FigurePosition(current_field)
+        self._available_move_vectors = (
+            list([(x, x) for x in range(-7, 8)] + [(x, -x) for x in range(-7, 8)])
+            + list(product(range(-7, 8), [0]))
+            + list(product([0], range(-7, 8)))
+        )
+
+    def list_available_moves(self) -> list:
+        cart_tuple = self._position.position_tuple
+        figure_moves = []
+        for move_vector in self._available_move_vectors:
+            figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
+
+        import string
+
+        figure_moves2 = [
+            f"{string.ascii_uppercase[h-1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
+        ]
+        return sorted(set(figure_moves2))
+
+    def validate_move(self, dest_field: str) -> bool:
+        return True if dest_field in self.list_available_moves() else False
