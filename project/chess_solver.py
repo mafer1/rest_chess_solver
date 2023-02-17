@@ -166,14 +166,16 @@ class Knight(Figure):
         then move one square horizontally or vertically
         :return: list
         """
-        figure_moves2 = [
-            f"{string.ascii_uppercase[h-1]}{v}"
-            for h, v in create_list_of_moves(
-                position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
+        return sorted(
+            set(
+                [
+                    f"{string.ascii_uppercase[h-1]}{v}"
+                    for h, v in create_list_of_moves(
+                        position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
+                    )
+                ]
             )
-        ]
-
-        return sorted(set(figure_moves2))
+        )
 
     def validate_move(self, dest_field: str) -> bool:
         """
@@ -198,17 +200,16 @@ class Rook(Figure):
         self._available_move_vectors = list(product(range(-7, 8), [0])) + list(product([0], range(-7, 8)))
 
     def list_available_moves(self) -> list:
-        cart_tuple = self._position.position_tuple
-        figure_moves = []
-        for move_vector in self._available_move_vectors:
-            figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
-
-        import string
-
-        figure_moves2 = [
-            f"{string.ascii_uppercase[h-1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
-        ]
-        return sorted(set(figure_moves2))
+        return sorted(
+            set(
+                [
+                    f"{string.ascii_uppercase[h-1]}{v}"
+                    for h, v in create_list_of_moves(
+                        position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
+                    )
+                ]
+            )
+        )
 
     def validate_move(self, dest_field: str) -> bool:
         return dest_field in self.list_available_moves()
@@ -227,17 +228,16 @@ class Queen(Figure):
         )
 
     def list_available_moves(self) -> list:
-        cart_tuple = self._position.position_tuple
-        figure_moves = []
-        for move_vector in self._available_move_vectors:
-            figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
-
-        import string
-
-        figure_moves2 = [
-            f"{string.ascii_uppercase[h-1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
-        ]
-        return sorted(set(figure_moves2))
+        return sorted(
+            set(
+                [
+                    f"{string.ascii_uppercase[h-1]}{v}"
+                    for h, v in create_list_of_moves(
+                        position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
+                    )
+                ]
+            )
+        )
 
     def validate_move(self, dest_field: str) -> bool:
         return dest_field in self.list_available_moves()
@@ -252,17 +252,16 @@ class Bishop(Figure):
         self._available_move_vectors = list([(x, x) for x in range(-7, 8)] + [(x, -x) for x in range(-7, 8)])
 
     def list_available_moves(self) -> list:
-        cart_tuple = self._position.position_tuple
-        figure_moves = []
-        for move_vector in self._available_move_vectors:
-            figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
-
-        import string
-
-        figure_moves2 = [
-            f"{string.ascii_uppercase[h-1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
-        ]
-        return sorted(set(figure_moves2))
+        return sorted(
+            set(
+                [
+                    f"{string.ascii_uppercase[h-1]}{v}"
+                    for h, v in create_list_of_moves(
+                        position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
+                    )
+                ]
+            )
+        )
 
     def validate_move(self, dest_field: str) -> bool:
         return dest_field in self.list_available_moves()
@@ -277,17 +276,16 @@ class King(Figure):
         self._available_move_vectors = list(product([-1, 0, 1], [-1, 0, 1]))
 
     def list_available_moves(self) -> list:
-        cart_tuple = self._position.position_tuple
-        figure_moves = []
-        for move_vector in self._available_move_vectors:
-            figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
-
-        import string
-
-        figure_moves2 = [
-            f"{string.ascii_uppercase[h-1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
-        ]
-        return sorted(set(figure_moves2))
+        return sorted(
+            set(
+                [
+                    f"{string.ascii_uppercase[h-1]}{v}"
+                    for h, v in create_list_of_moves(
+                        position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
+                    )
+                ]
+            )
+        )
 
     def validate_move(self, dest_field: str) -> bool:
         return dest_field in self.list_available_moves()
