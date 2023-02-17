@@ -180,12 +180,7 @@ class Knight(Figure):
         """
         return sorted(
             set(
-                [
-                    f"{string.ascii_uppercase[h-1]}{v}"
-                    for h, v in create_list_of_moves(
-                        position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
-                    )
-                ]
+                create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
             )
         )
 
@@ -216,12 +211,7 @@ class Rook(Figure):
     def list_available_moves(self) -> list:
         return sorted(
             set(
-                [
-                    f"{string.ascii_uppercase[h-1]}{v}"
-                    for h, v in create_list_of_moves(
-                        position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
-                    )
-                ]
+                create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
             )
         )
 
@@ -247,12 +237,7 @@ class Queen(Figure):
     def list_available_moves(self) -> list:
         return sorted(
             set(
-                [
-                    f"{string.ascii_uppercase[h-1]}{v}"
-                    for h, v in create_list_of_moves(
-                        position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
-                    )
-                ]
+                create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
             )
         )
 
@@ -275,12 +260,7 @@ class Bishop(Figure):
     def list_available_moves(self) -> list:
         return sorted(
             set(
-                [
-                    f"{string.ascii_uppercase[h-1]}{v}"
-                    for h, v in create_list_of_moves(
-                        position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
-                    )
-                ]
+                create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
             )
         )
 
@@ -299,12 +279,7 @@ class King(Figure):
     def list_available_moves(self) -> list:
         return sorted(
             set(
-                [
-                    f"{string.ascii_uppercase[h-1]}{v}"
-                    for h, v in create_list_of_moves(
-                        position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
-                    )
-                ]
+                create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
             )
         )
 
