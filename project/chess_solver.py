@@ -21,18 +21,19 @@ class Figure(metaclass=ABCMeta):
         from current field to destination field for a defined chess figure"""
 
 
-class Location:
+class FigurePosition:
     """
     Location class with validation methods for both dimensions.
     horizontal: str range(A-H)
     vertical: int range 1-9
     """
 
-    _HORIZONTAL_TRANSITION = dict(zip("ABCDEFGH", range(1, 9)))
-
-    def __init__(self, horizontal, vertical):
-        self.horizontal: str = horizontal
-        self.vertical: int = vertical
+    def __init__(self, bare_position):
+        self.bare_position = bare_position
+        self.horizontal: str = self.bare_position[0]
+        self.horizontal_index: int = dict(zip("ABCDEFGH", range(1, 9)))[self.horizontal]
+        self.vertical = self.bare_position[1]
+        self.position_tuple = (self.horizontal_index, self.vertical)
 
     @property
     def horizontal(self):
@@ -67,12 +68,8 @@ class Location:
             else:
                 self._vertical = value
 
-    def __repr__(self):
-        """Location representation"""
-        return f"Location object for chess figure: ({self._horizontal}, {self._vertical})"
-
     def __add__(self, other):
-        return self.horizontal + other.horizontal, self.vertical + other.vertical
+        return self.horizontal_index + other.horizontal_index, self.vertical + other.vertical
 
 
 class Pawn(Figure):
