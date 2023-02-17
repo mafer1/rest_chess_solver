@@ -3,6 +3,26 @@ from abc import ABCMeta, abstractmethod
 from itertools import product
 
 
+def create_list_of_moves(position_tuple: tuple, vectors: list) -> list:
+    """
+    Function of creating set of possible vectors for chess figures
+    :param position_tuple: position described in cartesian coordinates
+    :param vectors: move vectors described in cartesian coordinates
+    :return: list of tuples with vectors available to do on chess boards
+    """
+    return [
+        new_position
+        for new_position in [
+            (
+                position_tuple[0] + move_vector[0],
+                position_tuple[1] + move_vector[1],
+            )
+            for move_vector in vectors
+        ]
+        if 0 < new_position[0] <= 8 and 0 < new_position[1] <= 8
+    ]
+
+
 class Figure(metaclass=ABCMeta):
     """Figure abstract base class"""
 
@@ -112,7 +132,6 @@ class Pawn(Figure):
             figure_moves2 = [
                 f"{string.ascii_uppercase[h - 1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
             ]
-
             return sorted(figure_moves2)
         else:
             figure_moves.append(
@@ -147,16 +166,13 @@ class Knight(Figure):
         then move one square horizontally or vertically
         :return: list
         """
-        cart_tuple = self._position.position_tuple
-        figure_moves = []
-        for move_vector in self._available_move_vectors:
-            figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
-
-        import string
-
         figure_moves2 = [
-            f"{string.ascii_uppercase[h-1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
+            f"{string.ascii_uppercase[h-1]}{v}"
+            for h, v in create_list_of_moves(
+                position_tuple=self._position.position_tuple, vectors=self._available_move_vectors
+            )
         ]
+
         return sorted(set(figure_moves2))
 
     def validate_move(self, dest_field: str) -> bool:
