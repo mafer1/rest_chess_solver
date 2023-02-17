@@ -35,3 +35,15 @@ def get_moves(chess_figure: str, current_field: str) -> tuple:
         "figure": chess_figure,
         "currentField": current_field,
     }, 200
+
+
+@app.get("/api/v1/<string:chess_figure>/<string:current_field>/<string:dest_field>")
+def field_validation(chess_figure: str, current_field: str, dest_field: str) -> tuple:
+    figure = FigureBuilder(chess_figure).build()
+    return {
+        "move": "invalid" if not figure(current_field).validate_move(dest_field) else "valid",
+        "error": None,
+        "figure": chess_figure,
+        "currentField": current_field,
+        "destField": dest_field,
+    }, 200
