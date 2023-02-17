@@ -70,6 +70,27 @@ class FigurePosition:
         return self.horizontal_index + other.horizontal_index, self.vertical + other.vertical
 
 
+class FigureBuilder:
+    def __init__(self, figure_name):
+        self.figure_name: str = figure_name
+        self.figures = {
+            "king": King,
+            "queen": Queen,
+            "bishop": Bishop,
+            "knight": Knight,
+            "rook": Rook,
+            "pawn": Pawn,
+        }
+
+    def build(self) -> Figure:
+        try:
+            _figure_name = self.figure_name.lower()
+        except KeyError:
+            Exception("Incorrect figure.")
+        else:
+            return self.figures[_figure_name]
+
+
 class Pawn(Figure):
     """Pawn figure - solider of the first line"""
 
