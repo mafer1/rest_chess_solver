@@ -185,7 +185,7 @@ class Rook(Figure):
         return sorted(set(figure_moves2))
 
     def validate_move(self, dest_field: str) -> bool:
-        return True if dest_field in self.list_available_moves() else False
+        return dest_field in self.list_available_moves()
 
 
 class Queen(Figure):
@@ -214,7 +214,7 @@ class Queen(Figure):
         return sorted(set(figure_moves2))
 
     def validate_move(self, dest_field: str) -> bool:
-        return True if dest_field in self.list_available_moves() else False
+        return dest_field in self.list_available_moves()
 
 
 class Bishop(Figure):
@@ -239,7 +239,7 @@ class Bishop(Figure):
         return sorted(set(figure_moves2))
 
     def validate_move(self, dest_field: str) -> bool:
-        return True if dest_field in self.list_available_moves() else False
+        return dest_field in self.list_available_moves()
 
 
 class King(Figure):
@@ -264,4 +264,4 @@ class King(Figure):
         return sorted(set(figure_moves2))
 
     def validate_move(self, dest_field: str) -> bool:
-        return True if dest_field in self.list_available_moves() else False
+        return dest_field in self.list_available_moves()
