@@ -103,7 +103,7 @@ def test_knight_validate_move(current_field, dest_field):
 
 @pytest.mark.parametrize(
     "current_field, expected_field",
-    (("B1", ["A1", "B1", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "C1", "D1", "E1", "F1", "G1", "H1"]),),
+    (("B1", ["A1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "C1", "D1", "E1", "F1", "G1", "H1"]),),
 )
 def test_rook_list_of_available(current_field, expected_field):
     rook_instance = Rook(current_field=current_field)
@@ -135,7 +135,6 @@ def test_figure_position_dunder_add():
             [
                 "A1",
                 "A2",
-                "B1",
                 "B2",
                 "B3",
                 "B4",
@@ -183,7 +182,7 @@ def test_queen_validate_move_correct(current_field, dest_field):
     (
         (
             "B7",
-            ["A6", "A7", "A8", "B6", "B7", "B8", "C6", "C7", "C8"],
+            ["A6", "A7", "A8", "B6", "B8", "C6", "C7", "C8"],
         ),
     ),
 )
@@ -211,7 +210,7 @@ def test_king_validate_move_correct(current_field, dest_field):
     (
         (
             "B7",
-            ["A6", "B7", "C8", "D7", "E6", "F5", "G4", "H3"],
+            ["A6", "A8", "C6", "C8", "D5", "E4", "F3", "G2", "H1"],
         ),
     ),
 )
