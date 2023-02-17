@@ -158,7 +158,9 @@ class Knight(Figure):
     def __init__(self, current_field):
         self.current_field = current_field
         self._position = FigurePosition(current_field)
-        self._available_move_vectors = list(product((-2, 2), (-1, 1))) + list(product((-1, 1), (-2, 2)))
+        self._available_move_vectors = [
+            vector for vector in list(product((-2, 2), (-1, 1))) + list(product((-1, 1), (-2, 2))) if vector != (0, 0)
+        ]
 
     def list_available_moves(self) -> list:
         """
@@ -197,7 +199,9 @@ class Rook(Figure):
     def __init__(self, current_field):
         self.current_field = current_field
         self._position = FigurePosition(current_field)
-        self._available_move_vectors = list(product(range(-7, 8), [0])) + list(product([0], range(-7, 8)))
+        self._available_move_vectors = [
+            vector for vector in list(product(range(-7, 8), [0])) + list(product([0], range(-7, 8))) if vector != (0, 0)
+        ]
 
     def list_available_moves(self) -> list:
         return sorted(
@@ -221,11 +225,14 @@ class Queen(Figure):
     def __init__(self, current_field):
         self.current_field = current_field
         self._position = FigurePosition(current_field)
-        self._available_move_vectors = (
-            list([(x, x) for x in range(-7, 8)] + [(x, -x) for x in range(-7, 8)])
+        self._available_move_vectors = [
+            vector
+            for vector in [(x, x) for x in range(-7, 8)]
+            + [(x, -x) for x in range(-7, 8)]
             + list(product(range(-7, 8), [0]))
             + list(product([0], range(-7, 8)))
-        )
+            if vector != (0, 0)
+        ]
 
     def list_available_moves(self) -> list:
         return sorted(
@@ -249,7 +256,11 @@ class Bishop(Figure):
     def __init__(self, current_field):
         self.current_field = current_field
         self._position = FigurePosition(current_field)
-        self._available_move_vectors = list([(x, x) for x in range(-7, 8)] + [(x, -x) for x in range(-7, 8)])
+        self._available_move_vectors = [
+            vector
+            for vector in list([(x, x) for x in range(-7, 8)] + [(x, -x) for x in range(-7, 8)])
+            if vector != (0, 0)
+        ]
 
     def list_available_moves(self) -> list:
         return sorted(
@@ -273,7 +284,7 @@ class King(Figure):
     def __init__(self, current_field):
         self.current_field = current_field
         self._position = FigurePosition(current_field)
-        self._available_move_vectors = list(product([-1, 0, 1], [-1, 0, 1]))
+        self._available_move_vectors = [vector for vector in list(product([-1, 0, 1], [-1, 0, 1])) if vector != (0, 0)]
 
     def list_available_moves(self) -> list:
         return sorted(
