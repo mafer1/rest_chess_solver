@@ -6,6 +6,11 @@ from flask import Flask
 app = Flask(__name__)
 
 
+@app.get("/api/v1/")
+def greeting():
+    return {"message": "Welcome to REST Chess solver!"}
+
+
 @app.get("/api/v1/<string:chess_figure>/<string:current_field>")
 def get_moves(chess_figure: str, current_field: str) -> tuple:
     if chess_figure.lower() not in ["king", "queen", "rook", "bishop", "knight", "pawn"]:
