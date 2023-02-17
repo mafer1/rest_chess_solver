@@ -77,7 +77,8 @@ class Pawn(Figure):
 
     def __init__(self, current_field):
         self.current_field = current_field
-        self._tuple_position = (str(current_field[0]), int(current_field[1]))
+        self._position = FigurePosition(current_field)
+        self._available_move_vectors = [(0, 1), (0, 2)]
 
     def list_available_moves(self) -> list:
         """
@@ -85,15 +86,31 @@ class Pawn(Figure):
         ONE EXCEPTION - when pawn is not moved, it can move forward two squares.
         :return: list
         """
-        if self._tuple_position not in chess_board:
+        import string
+
+        cart_tuple = self._position.position_tuple
+        figure_moves = []
+
+        if (
+            string.ascii_uppercase[self._position.position_tuple[0] - 1],
+            self._position.position_tuple[1],
+        ) not in chess_board:
             raise Exception("Field does not exist.")
-        elif self._tuple_position[1] == 2:
-            return [
-                f"{self._tuple_position[0]}{int(self._tuple_position[1]) + 1}",
-                f"{self._tuple_position[0]}{int(self._tuple_position[1]) + 2}",
+        if self._position.position_tuple[1] == 2:
+            for move_vector in self._available_move_vectors:
+                figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
+            figure_moves2 = [
+                f"{string.ascii_uppercase[h - 1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
             ]
+
+            return sorted(figure_moves2)
         else:
-            return [f"{self._tuple_position[0]}{int(self._tuple_position[1]) + 1}"]
+            figure_moves.append(
+                (cart_tuple[0] + self._available_move_vectors[0][0], cart_tuple[1] + self._available_move_vectors[0][1])
+            )
+            return [
+                f"{string.ascii_uppercase[h - 1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
+            ]
 
     def validate_move(self, dest_field: str) -> bool:
         """
@@ -103,4 +120,4 @@ class Pawn(Figure):
         :param dest_field:
         :return: bool
         """
-        return True if dest_field in self.list_available_moves() else False
+        return dest_field in self.list_available_moves()
