@@ -10,9 +10,9 @@ def location_translator(func):
     :return: list of translated values corresponding to chess board location system
     """
 
-    def inner(*args, **kwargs):
+    def inner(*args, **kwargs) -> list:
         list_of_moves = func(*args, **kwargs)
-        return [f"{string.ascii_uppercase[h - 1]}{v}" for h, v in list_of_moves]
+        return sorted(set([f"{string.ascii_uppercase[h - 1]}{v}" for h, v in list_of_moves]))
 
     return inner
 
@@ -142,13 +142,9 @@ class Pawn(Figure):
         ONE EXCEPTION - when pawn is not moved, it can move forward two squares.
         :return: list
         """
-        return sorted(
-            set(
-                create_list_of_moves(
-                    self._position.position_tuple,
-                    self._available_move_vectors if self._position.position_tuple[1] == 2 else [(0, 1)],
-                )
-            )
+        return create_list_of_moves(
+            self._position.position_tuple,
+            self._available_move_vectors if self._position.position_tuple[1] == 2 else [(0, 1)],
         )
 
     def validate_move(self, dest_field: str) -> bool:
@@ -178,11 +174,7 @@ class Knight(Figure):
         then move one square horizontally or vertically
         :return: list
         """
-        return sorted(
-            set(
-                create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
-            )
-        )
+        return create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
 
     def validate_move(self, dest_field: str) -> bool:
         """
@@ -209,11 +201,7 @@ class Rook(Figure):
         ]
 
     def list_available_moves(self) -> list:
-        return sorted(
-            set(
-                create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
-            )
-        )
+        return create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
 
     def validate_move(self, dest_field: str) -> bool:
         return dest_field in self.list_available_moves()
@@ -235,11 +223,7 @@ class Queen(Figure):
         ]
 
     def list_available_moves(self) -> list:
-        return sorted(
-            set(
-                create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
-            )
-        )
+        return create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
 
     def validate_move(self, dest_field: str) -> bool:
         return dest_field in self.list_available_moves()
@@ -258,11 +242,7 @@ class Bishop(Figure):
         ]
 
     def list_available_moves(self) -> list:
-        return sorted(
-            set(
-                create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
-            )
-        )
+        return create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
 
     def validate_move(self, dest_field: str) -> bool:
         return dest_field in self.list_available_moves()
@@ -277,11 +257,7 @@ class King(Figure):
         self._available_move_vectors = [vector for vector in list(product([-1, 0, 1], [-1, 0, 1])) if vector != (0, 0)]
 
     def list_available_moves(self) -> list:
-        return sorted(
-            set(
-                create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
-            )
-        )
+        return create_list_of_moves(position_tuple=self._position.position_tuple, vectors=self._available_move_vectors)
 
     def validate_move(self, dest_field: str) -> bool:
         return dest_field in self.list_available_moves()
