@@ -121,3 +121,43 @@ class Pawn(Figure):
         :return: bool
         """
         return dest_field in self.list_available_moves()
+
+
+class Knight(Figure):
+    """Knight figure - attacker with L-shape move"""
+
+    def __init__(self, current_field):
+        self.current_field = current_field
+        self._position = FigurePosition(current_field)
+        self._available_move_vectors = list(product((-2, 2), (-1, 1))) + list(product((-1, 1), (-2, 2)))
+
+    def list_available_moves(self) -> list:
+        """
+        Knights moves two squares in a horizontal or vertical direction,
+        then move one square horizontally or vertically
+        :return: list
+        """
+        cart_tuple = self._position.position_tuple
+        figure_moves = []
+        for move_vector in self._available_move_vectors:
+            figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
+
+        import string
+
+        figure_moves2 = [
+            f"{string.ascii_uppercase[h-1]}{v}" for h, v in figure_moves if h in range(1, 9) and v in range(1, 9)
+        ]
+        return sorted(set(figure_moves2))
+
+    def validate_move(self, dest_field: str) -> bool:
+        """
+        Move validator for Knight figure. The move of this figure can be divided into 2 parts:
+            first: move two squares in a horizontal or vertical direction
+            second: move one square horizontally or vertically
+            (depends on first move if first move was horizontal -> second move has to be vertically
+            and oppositely for first vertical move)
+
+        :param dest_field:
+        :return: bool
+        """
+        return dest_field in self.list_available_moves()
