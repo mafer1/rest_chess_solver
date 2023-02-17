@@ -48,7 +48,7 @@ class FigurePosition:
     def horizontal(self, value: str):
         if not isinstance(value, str):
             raise TypeError("Inappropriate type of value. Please use string")
-        elif value not in string.ascii_lowercase():
+        elif value not in string.ascii_lowercase[:8]:
             raise ValueError("Uncorrected value. Please use value from range A-H")
         else:
             self._horizontal = value
@@ -104,16 +104,8 @@ class Pawn(Figure):
         ONE EXCEPTION - when pawn is not moved, it can move forward two squares.
         :return: list
         """
-        import string
-
         cart_tuple = self._position.position_tuple
         figure_moves = []
-
-        if (
-            string.ascii_uppercase[self._position.position_tuple[0] - 1],
-            self._position.position_tuple[1],
-        ) not in list(product("ABCDEFGH", range(1, 9))):
-            raise Exception("Field does not exist.")
         if self._position.position_tuple[1] == 2:
             for move_vector in self._available_move_vectors:
                 figure_moves.append((cart_tuple[0] + move_vector[0], cart_tuple[1] + move_vector[1]))
