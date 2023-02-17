@@ -1,10 +1,10 @@
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 from itertools import product
 
 chess_board = list(product("ABCDEFGH", range(1, 9)))
 
 
-class Figure(metaclass=ABC):
+class Figure(metaclass=ABCMeta):
     """Figure abstract base class"""
 
     @abstractmethod
