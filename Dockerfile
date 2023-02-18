@@ -5,7 +5,7 @@ COPY . .
 
 RUN python -m pip install -r requirements.txt
 
-ENV FLASK_APP=app.py
+ENV FLASK_APP=.
 WORKDIR /src/project
 
 EXPOSE 8000
