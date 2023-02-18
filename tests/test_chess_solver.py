@@ -1,15 +1,6 @@
 import pytest
 
-from project.chess_solver import (
-    Bishop,
-    FigureBuilder,
-    FigurePosition,
-    King,
-    Knight,
-    Pawn,
-    Queen,
-    Rook,
-)
+from project.chess_solver import Bishop, FigureBuilder, King, Knight, Pawn, Queen, Rook
 
 
 @pytest.mark.parametrize(
@@ -121,10 +112,6 @@ def test_rook_list_of_available(current_field, expected_field):
 def test_rook_validate_move(current_field, dest_field):
     rook_instance = Rook(current_field=current_field)
     assert rook_instance.validate_move(dest_field)
-
-
-def test_figure_position_dunder_add():
-    assert FigurePosition("A2") + FigurePosition("C4")
 
 
 @pytest.mark.parametrize(
