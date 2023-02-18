@@ -103,9 +103,6 @@ class FigurePosition:
             else:
                 self._vertical = value
 
-    def __add__(self, other):
-        return self.horizontal_index + other.horizontal_index, self.vertical + other.vertical
-
 
 class FigureBuilder:
     def __init__(self, figure_name):
@@ -118,6 +115,9 @@ class FigureBuilder:
             "rook": Rook,
             "pawn": Pawn,
         }
+
+    def is_valid(self):
+        return self.figure_name.lower() in self.figures
 
     def build(self) -> Figure:
         try:
