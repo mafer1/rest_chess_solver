@@ -15,14 +15,13 @@ def greeting():
 
 @api.get("/api/v1/<string:chess_figure>/<string:current_field>")
 def get_moves(chess_figure: str, current_field: str) -> tuple:
-    if chess_figure.lower() not in ["king", "queen", "rook", "bishop", "knight", "pawn"]:
+    if not FigureBuilder(chess_figure).is_valid():
         return {
             "availableMoves": [],
             "error": "Piece does not exist.",
             "figure": chess_figure.title(),
             "currentField": current_field.upper(),
         }, 404
-
     if (
         len(current_field) != 2
         or current_field[0].lower() not in string.ascii_lowercase[:9]
@@ -46,13 +45,14 @@ def get_moves(chess_figure: str, current_field: str) -> tuple:
 
 @api.get("/api/v1/<string:chess_figure>/<string:current_field>/<string:dest_field>")
 def field_validation(chess_figure: str, current_field: str, dest_field: str) -> tuple:
-    if chess_figure.lower() not in ["king", "queen", "rook", "bishop", "knight", "pawn"]:
+    if not FigureBuilder(chess_figure).is_valid():
         return {
             "availableMoves": [],
             "error": "Piece does not exist.",
             "figure": chess_figure.title(),
             "currentField": current_field.upper(),
         }, 404
+
     if (
         len(current_field) != 2
         or len(dest_field) != 2
