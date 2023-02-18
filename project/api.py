@@ -1,17 +1,18 @@
 import string
 
-from chess_solver import FigureBuilder
-from flask import Flask
+from flask import Blueprint
 
-app = Flask(__name__)
+from .chess_solver import FigureBuilder
+
+api = Blueprint("api", __name__)
 
 
-@app.get("/api/v1/")
+@api.get("/api/v1/")
 def greeting():
     return {"message": "Welcome to REST Chess solver!"}
 
 
-@app.get("/api/v1/<string:chess_figure>/<string:current_field>")
+@api.get("/api/v1/<string:chess_figure>/<string:current_field>")
 def get_moves(chess_figure: str, current_field: str) -> tuple:
     if chess_figure.lower() not in ["king", "queen", "rook", "bishop", "knight", "pawn"]:
         return {
@@ -42,7 +43,7 @@ def get_moves(chess_figure: str, current_field: str) -> tuple:
     }, 200
 
 
-@app.get("/api/v1/<string:chess_figure>/<string:current_field>/<string:dest_field>")
+@api.get("/api/v1/<string:chess_figure>/<string:current_field>/<string:dest_field>")
 def field_validation(chess_figure: str, current_field: str, dest_field: str) -> tuple:
     figure = FigureBuilder(chess_figure).build()
     return {
